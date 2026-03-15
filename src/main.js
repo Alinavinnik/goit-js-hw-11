@@ -7,6 +7,7 @@ function handleSubmit(e) {
   e.preventDefault();
   const formData = new FormData(form);
   const searchText = formData.get('search-text');
-  getImagesByQuery(searchText).then(res => createGallery());
+  getImagesByQuery(searchText).then(res => createGallery(res.hits));
+
   form.reset();
 }

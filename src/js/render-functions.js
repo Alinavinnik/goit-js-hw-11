@@ -4,16 +4,9 @@
 const ulElem = document.querySelector('.gallery');
 // new SimpleLightbox();
 export function createGallery(images) {
-  const markup = imgsTemplate(images);
-  ulElem.innerHTML = markup;
-}
-function clearGallery() {}
-function showLoader() {}
-function hideLoader() {}
-
-function imgTemplate(img) {
-  const { webformatURL, tags, likes, views, comments, downloads } = img;
-  return `<figure class="photo-card">
+  function imgTemplate(img) {
+    const { webformatURL, tags, likes, views, comments, downloads } = img;
+    return `<figure class="photo-card">
               <img src="${webformatURL}" alt="${tags}" />
 
               <figcaption class="info">
@@ -23,8 +16,13 @@ function imgTemplate(img) {
                 <p>Downloads: ${downloads}</p>
               </figcaption>
             </figure>`;
+  }
+  function imgsTemplate(imgs) {
+    return imgs.map(imgTemplate).join('');
+  }
+  const markup = imgsTemplate(images);
+  return (ulElem.innerHTML = markup);
 }
-
-function imgsTemplate(imgs) {
-  return items.map(imgTemplate).join('');
-}
+function clearGallery() {}
+function showLoader() {}
+function hideLoader() {}

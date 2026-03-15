@@ -1,6 +1,6 @@
 import axios from 'axios';
 export function getImagesByQuery(query) {
-  axios
+  return axios
     .get('https://pixabay.com/api/', {
       params: {
         key: '55036420-a7a19d5751e273048ff10c958',
@@ -10,6 +10,5 @@ export function getImagesByQuery(query) {
         safesearch: true,
       },
     })
-    .then(res => res.data)
-    .catch();
+    .then(res => res.data);
 }
