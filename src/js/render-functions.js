@@ -1,13 +1,13 @@
-// import SimpleLightbox from 'simplelightbox';
-// import iziToast from 'izitoast';
-// import 'izitoast/dist/css/iziToast.min.css';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 const ulElem = document.querySelector('.gallery');
-// new SimpleLightbox();
+
+// створення розмітки
 export function createGallery(images) {
   function imgTemplate(img) {
     const { webformatURL, tags, likes, views, comments, downloads } = img;
     return `<figure class="photo-card">
-              <img src="${webformatURL}" alt="${tags}"  />
+             <a> <img src="${webformatURL}" alt="${tags}"/></a>
 
               <figcaption class="info">
               <div class="info-item">
@@ -24,6 +24,8 @@ export function createGallery(images) {
   const markup = imgsTemplate(images);
   return (ulElem.innerHTML = markup);
 }
+
+const lightbox = new SimpleLightbox('.gallery a');
 function clearGallery() {}
 function showLoader() {}
 function hideLoader() {}
