@@ -3,6 +3,10 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 const ulElem = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
 
+let lightbox = new SimpleLightbox('.gallery .photo-card a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 // створення розмітки
 export function createGallery(images) {
   function imgTemplate(img) {
@@ -15,27 +19,31 @@ export function createGallery(images) {
       downloads,
       largeImageURL,
     } = img;
-    return `<figure class="photo-card">
-              <a>${largeImageURL}</a><img src="${webformatURL}" alt="${tags}"/>
+    return `<div class="photo-card">
+              <a href=${largeImageURL}><img src="${webformatURL}" alt="${tags}"/></a>
 
-              <figcaption class="info">
-              <div class="info-item">
-              <p>Likes: <span>${likes}</span> </p></div>
-               <div class="info-item"><p>Views: <span>${views}</span></p></div>
-                <div class="info-item"><p>Comments: <span>${comments}</span></p></div>
-                 <div class="info-item"><p>Downloads: <span>${downloads}</span></p></div>
-              </figcaption>
-            </figure>`;
+              <div class="info">
+              <div class="info-item"><h2>Likes: <span>${likes}</span></h2></div>
+              <div class="info-item"> <h2>Views: <span>${views}</span></h2></div>
+              <div class="info-item"><h2>Comments: <span>${comments}</span></h2></div>
+              <div class="info-item"><h2>Downloads: <span>${downloads}</span></h2></div>
+            </div>
+            </div>`;
   }
   function imgsTemplate(imgs) {
     return imgs.map(imgTemplate).join('');
   }
   const markup = imgsTemplate(images);
-  return (ulElem.innerHTML = markup);
+  ulElem.innerHTML = markup;
+  lightbox.refresh();
 }
 
-export function clearGallery() {}
+export function clearGallery() {
+  ulElem.innerHTML = '';
+}
 export function showLoader() {
   loader.classList.remove('is-hidden');
 }
-export function hideLoader() {}
+export function hideLoader() {
+  loader.classList.add('is-hidden');
+}

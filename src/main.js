@@ -1,5 +1,10 @@
 import { getImagesByQuery } from './js/pixabay-api';
-import { createGallery } from './js/render-functions';
+import {
+  createGallery,
+  clearGallery,
+  showLoader,
+  hideLoader,
+} from './js/render-functions';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 const form = document.querySelector('.form');
@@ -9,6 +14,8 @@ function handleSubmit(e) {
   e.preventDefault();
   const formData = new FormData(form);
   const searchText = formData.get('search-text');
+  clearGallery();
+  showLoader();
   if (searchText.trim() === '') {
     iziToast.show({
       message: 'Please enter a search term',
@@ -23,9 +30,12 @@ function handleSubmit(e) {
           position: 'topRight',
         });
       } else {
-        createGallery(res.hits);
+        createGallery(res.hits).catch(err =>
+          iziToast.error({ message: 'Something went wrong!' })
+        );
       }
     });
   }
+  hideLoader();
   form.reset();
 }
