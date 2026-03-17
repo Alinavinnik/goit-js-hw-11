@@ -23,23 +23,25 @@ function handleSubmit(e) {
   } else {
     clearGallery();
     showLoader();
-    getImagesByQuery(searchText).then(res => {
-      if (!res.hits.length) {
-        iziToast.show({
-          message: `Sorry, there are no images matching your search query.Please try again!`,
-          position: 'topRight',
-        });
-      } else {
-        return createGallery(res.hits)
-          .catch(
-            err => console.log(err),
-            iziToast({ message: 'Something went wrong!', position: 'topRight' })
-          )
-          .finally(() => {
-            hideLoader();
-            form.reset();
+    getImagesByQuery(searchText)
+      .then(res => {
+        if (!res.hits.length) {
+          hideLoader();
+          iziToast.show({
+            message: `Sorry, there are no images matching your search query.Please try again!`,
+            position: 'topRight',
           });
-      }
-    });
+        } else {
+          createGallery(res.hits);
+        }
+      })
+      .catch(
+        res => hideLoader(),
+        iziToast({ message: 'Something went wrong!', position: 'topRight' })
+      )
+      .finally(() => {
+        hideLoader();
+        form.reset();
+      });
   }
 }
