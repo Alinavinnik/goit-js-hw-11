@@ -36,7 +36,7 @@ function handleSubmit(e) {
         }
       })
       .catch(
-        res => hideLoader(),
+        () => hideLoader(),
         iziToast({ message: 'Something went wrong!', position: 'topRight' })
       )
       .finally(() => {
