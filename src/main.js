@@ -35,10 +35,14 @@ function handleSubmit(e) {
           createGallery(res.hits);
         }
       })
-      .catch(
-        () => hideLoader(),
-        iziToast({ message: 'Something went wrong!', position: 'topRight' })
-      )
+      .catch(err => {
+        hideLoader();
+
+        iziToast.error({
+          message: 'Something went wrong!',
+          position: 'topRight',
+        });
+      })
       .finally(() => {
         hideLoader();
         form.reset();
