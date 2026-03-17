@@ -1,13 +1,22 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 const ulElem = document.querySelector('.gallery');
+const loader = document.querySelector('.loader');
 
 // створення розмітки
 export function createGallery(images) {
   function imgTemplate(img) {
-    const { webformatURL, tags, likes, views, comments, downloads } = img;
+    const {
+      webformatURL,
+      tags,
+      likes,
+      views,
+      comments,
+      downloads,
+      largeImageURL,
+    } = img;
     return `<figure class="photo-card">
-             <a> <img src="${webformatURL}" alt="${tags}"/></a>
+              <a>${largeImageURL}</a><img src="${webformatURL}" alt="${tags}"/>
 
               <figcaption class="info">
               <div class="info-item">
@@ -25,7 +34,8 @@ export function createGallery(images) {
   return (ulElem.innerHTML = markup);
 }
 
-const lightbox = new SimpleLightbox('.gallery a');
-function clearGallery() {}
-function showLoader() {}
-function hideLoader() {}
+export function clearGallery() {}
+export function showLoader() {
+  loader.classList.remove('is-hidden');
+}
+export function hideLoader() {}
