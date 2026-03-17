@@ -14,8 +14,6 @@ function handleSubmit(e) {
   e.preventDefault();
   const formData = new FormData(form);
   const searchText = formData.get('search-text');
-  clearGallery();
-  showLoader();
   if (searchText.trim() === '') {
     iziToast.show({
       message: 'Please enter a search term',
@@ -23,6 +21,8 @@ function handleSubmit(e) {
     });
     return;
   } else {
+    clearGallery();
+    showLoader();
     getImagesByQuery(searchText).then(res => {
       if (!res.hits.length) {
         iziToast.show({
@@ -30,12 +30,16 @@ function handleSubmit(e) {
           position: 'topRight',
         });
       } else {
-        createGallery(res.hits).catch(err =>
-          iziToast.error({ message: 'Something went wrong!' })
-        );
+        return createGallery(res.hits)
+          .catch(
+            err => console.log(err),
+            iziToast({ message: 'Something went wrong!', position: 'topRight' })
+          )
+          .finally(() => {
+            hideLoader();
+            form.reset();
+          });
       }
     });
   }
-  hideLoader();
-  form.reset();
 }
