@@ -18,6 +18,7 @@ function handleSubmit(e) {
     iziToast.show({
       message: 'Please enter a search term',
       position: 'topRight',
+      color: 'rgba(232, 13, 13, 0.8)',
     });
     return;
   } else {
